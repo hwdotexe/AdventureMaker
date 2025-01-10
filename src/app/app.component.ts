@@ -16,6 +16,15 @@ export class AppComponent {
   json = '';
   gameModel?: AdventureModel;
 
+  validateMessages: string[] = [];
+
+  constructor() {
+    this.gameModel = {
+      steps: [],
+      items: []
+    };
+  }
+
   parse() {
     try {
       this.gameModel = JSON.parse(this.json) as AdventureModel;
@@ -29,5 +38,21 @@ export class AppComponent {
 
   export() {
     this.json = JSON.stringify(this.gameModel);
+  }
+
+  validate() {
+    // Steps need at least 1 button
+    // Button stepIDs need to point to a real Step
+    // Every Step should have a button that directs there (except the first one)
+    // Add/Remove/Require item IDs need to point to real Items
+    // No blanks
+  }
+
+  addStep() {
+    this.gameModel?.steps.push({
+      stepID: '',
+      label: '',
+      buttons: []
+    });
   }
 }

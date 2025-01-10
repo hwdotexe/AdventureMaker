@@ -1,0 +1,40 @@
+<div *ngIf="button" class="border p-2 rounded-md">
+  <h3 class="font-bold text-lg">Button</h3>
+  <input [(ngModel)]="button.stepID" placeholder="Step ID" class="border px-2 py-1 rounded-sm m-1" />
+  <input [(ngModel)]="button.label" placeholder="Text" class="border px-2 py-1 rounded-sm m-1" />
+  <input [(ngModel)]="button.route" placeholder="Nav Route" class="border px-2 py-1 rounded-sm m-1" />
+
+  <button
+    *ngIf="!button.inventory"
+    (click)="hookInventory()"
+    class="bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">
+    Hook Inventory
+  </button>
+
+  <div *ngIf="button.inventory" class="border rounded-md p-1">
+    <h3 class="font-bold text-lg">Inventory Control</h3>
+    <div>
+      <button (click)="addInventoryInsert()" class="bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Add</button>
+      <div *ngFor="let addItem of button.inventory.add; index as i">
+        <input [(ngModel)]="button.inventory.add![i]" placeholder="Item ID" class="border px-2 py-1 rounded-sm m-1" />
+      </div>
+    </div>
+
+    <div>
+      <button (click)="addInventoryDelete()" class="bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Delete</button>
+      <div *ngFor="let delItem of button.inventory.remove; index as i">
+        <input [(ngModel)]="button.inventory.remove![i]" placeholder="Item ID" class="border px-2 py-1 rounded-sm m-1" />
+      </div>
+    </div>
+
+    <div>
+      <button (click)="addInventoryRequires()" class="bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">
+        Require
+      </button>
+      <div *ngFor="let reqItem of button.inventory.requires; index as i">
+        <input [(ngModel)]="button.inventory.requires![i].itemID" placeholder="Item ID" class="border px-2 py-1 rounded-sm m-1" />
+        <input [(ngModel)]="button.inventory.requires![i].error" placeholder="Error Message" class="border px-2 py-1 rounded-sm m-1" />
+      </div>
+    </div>
+  </div>
+</div>

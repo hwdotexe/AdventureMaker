@@ -1,3 +1,10 @@
-<div *ngIf="!!step" class="max-w-60 border border-gray-800 rounded-md p-2 w-64 h-64">
-  <p>{{ step.label }}</p>
+<div *ngIf="!!step" class="max-w-60 border border-gray-800 rounded-md p-2 min-w-80 min-h-64">
+  <input [(ngModel)]="step.stepID" placeholder="Step ID" class="border px-2 py-1 rounded-sm m-1" />
+  <input [(ngModel)]="step.label" placeholder="Text" class="border px-2 py-1 rounded-sm m-1" />
+
+  <div>
+    <p *ngIf="step.buttons.length === 0" class="text-red-800 font-bold text-sm">You must add at least 1 button.</p>
+    <button (click)="addButton()" class="bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Add Button</button>
+    <app-adventure-button *ngFor="let button of step.buttons" [button]="button"></app-adventure-button>
+  </div>
 </div>
