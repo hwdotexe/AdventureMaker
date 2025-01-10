@@ -1,0 +1,10 @@
+<div>
+  <h1>Text Adventure Game Generator</h1>
+  <textarea [(ngModel)]="json"></textarea>
+  <button (click)="parse()">Parse Json</button>
+  <button>Export Json</button>
+</div>
+<div>
+  <button>Add Step</button>
+  <app-adventure-step *ngFor="let step of gameModel?.steps" [step]="step"></app-adventure-step>
+</div>
