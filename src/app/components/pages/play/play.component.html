@@ -1,0 +1,43 @@
+<textarea
+  [(ngModel)]="json"
+  class="min-w-[30rem] min-h-[12rem] border border-gray-700 rounded-sm"
+  placeholder="Paste JSON here and click Load"></textarea>
+<br />
+<button *ngIf="!!json" (click)="parse()" class="bg-sky-700 hover:bg-sky-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Load</button>
+<div class="max-w-[50%]">
+  <div *ngFor="let step of unlockedSteps">
+    <ng-container *ngIf="!step.self; else self">
+      <div class="p-3 text-lg my-3 w-fit mr-auto">
+        <p>
+          {{ step.label }}
+        </p>
+      </div>
+    </ng-container>
+    <ng-template #self>
+      <div class="p-3 text-lg my-3 w-fit ml-auto">
+        <p>
+          {{ step.label }}
+        </p>
+      </div>
+    </ng-template>
+  </div>
+
+  <div *ngIf="unlockedSteps[unlockedSteps.length - 1] as lastStep">
+    <button
+      class="font-body py-2 px-3 my-3 mr-2 rounded-md shadow-md font-bold text-gray-50 bg-ltDeepSky-100 hover:bg-ltDeepSky-200 active:bg-ltDeepSky-300 dark:bg-gray-700 dark:hover:bg-gray-800 dark:active:bg-gray-950"
+      *ngFor="let b of lastStep.buttons"
+      (click)="advanceStep(lastStep.stepID, b)">
+      {{ b.label }}
+    </button>
+  </div>
+
+  <div class="text-left" *ngIf="!!unlockedItems && unlockedItems.length > 0">
+    <hr class="border-gray-600 border-b-2 my-3 mx-auto max-w-[90%] md:max-w-full" />
+    <div class="md:max-w-[50%] md:mx-auto">
+      <h2 class="text-2xl md:text-3xl font-legend text-center mb-3">Your Inventory</h2>
+      <ul class="list-disc ml-8 md:ml-4">
+        <li *ngFor="let item of unlockedItems">{{ item.name }}</li>
+      </ul>
+    </div>
+  </div>
+</div>

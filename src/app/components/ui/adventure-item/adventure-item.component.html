@@ -1,3 +1,9 @@
-<div *ngIf="!!item" class="max-w-60 border border-gray-800 rounded-md p-2">
-  <p>{{ item.name }}</p>
+<div *ngIf="!!item" class="max-w-72 border border-gray-800 rounded-md p-2">
+  <div class="flex">
+    <h2 class="flex-initial font-bold text-lg">Item {{ index }}</h2>
+    <div class="flex-auto"></div>
+    <h2 class="flex-initial font-bold text-lg text-red-600 hover:bg-red-950 hover:cursor-pointer px-2 py-1 rounded-md" (click)="delete()">X</h2>
+  </div>
+  <input [(ngModel)]="item.itemID" placeholder="Item ID" class="border px-2 py-1 rounded-sm m-1" />
+  <input [(ngModel)]="item.name" placeholder="Item Name" class="border px-2 py-1 rounded-sm m-1" />
 </div>

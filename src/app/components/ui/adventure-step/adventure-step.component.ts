@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdventureStep } from '../../../models/adventure-step.interface';
 import { AdventureButtonComponent } from '../adventure-button/adventure-button.component';
@@ -13,6 +13,8 @@ import { AdventureButtonComponent } from '../adventure-button/adventure-button.c
 })
 export class AdventureStepComponent {
   @Input() step?: AdventureStep;
+  @Input() index?: number;
+  @Output() deleteStep = new EventEmitter();
 
   addButton() {
     this.step?.buttons.push({
@@ -20,5 +22,13 @@ export class AdventureStepComponent {
       stepID: '',
       route: ''
     });
+  }
+
+  delete() {
+    this.deleteStep.emit();
+  }
+
+  deleteButton(button: number) {
+    this.step?.buttons.splice(button, 1);
   }
 }
