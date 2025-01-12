@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AdventureModel } from '../../../models/adventure-model.interface';
@@ -13,7 +13,7 @@ import { AdventureStepComponent } from '../../ui/adventure-step/adventure-step.c
   templateUrl: './build.component.html',
   styleUrl: './build.component.css'
 })
-export class BuildComponent {
+export class BuildComponent implements OnInit {
   json = '';
   validateMessages: string[] = [];
   gameModel: AdventureModel;
@@ -23,6 +23,15 @@ export class BuildComponent {
       steps: [],
       items: []
     };
+  }
+
+  ngOnInit(): void {
+    var local = localStorage.getItem('advmaker');
+
+    if (local) {
+      this.json = local;
+      this.gameModel = JSON.parse(local) as AdventureModel;
+    }
   }
 
   parse() {
@@ -36,6 +45,16 @@ export class BuildComponent {
 
   export() {
     this.json = JSON.stringify(this.gameModel);
+    localStorage.setItem('advmaker', this.json);
+  }
+
+  reset() {
+    this.gameModel = {
+      steps: [],
+      items: []
+    };
+
+    this.json = '';
   }
 
   validate() {

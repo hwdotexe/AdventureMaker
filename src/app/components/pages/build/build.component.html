@@ -10,7 +10,8 @@
     placeholder="Paste JSON here to parse, or leave blank to export"></textarea>
   <br />
   <button *ngIf="!!json" (click)="parse()" class="bg-sky-700 hover:bg-sky-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Parse Json</button>
-  <button (click)="export()" class="bg-orange-700 hover:bg-orange-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Export Json</button>
+  <button (click)="export()" class="bg-orange-700 hover:bg-orange-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Export & Save</button>
+  <button (click)="reset()" class="bg-red-700 hover:bg-red-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">RESET</button>
   <button [routerLink]="['/play']" class="bg-yellow-500 hover:bg-orange-700 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Play</button>
 </div>
 
