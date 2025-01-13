@@ -17,32 +17,44 @@ export class ScopeFilterPipe implements PipeTransform {
       return steps;
     }
 
-    var newList = [];
+    var refs = this.findSubReferenceSteps(steps, [step]);
 
-    if (steps.indexOf(step) > 0) {
-      newList.push(step);
+    return refs;
+  }
 
-      var workingStepID = step.stepID;
+  private findSubReferenceSteps(steps: AdventureStep[], searchSteps: AdventureStep[]): AdventureStep[] {
+    var foundReferences: AdventureStep[] = [];
+    var found = false;
 
-      for (var i = 0; i < steps.length; i++) {
-        for (var loopStep of steps) {
-          for (var button of loopStep.buttons) {
-            if (button.stepID === workingStepID) {
-              workingStepID = loopStep.stepID;
+    // Add all searchSteps to our found references list
+    searchSteps.forEach(ss => foundReferences.push(ss));
 
-              if (!newList.find(nl => nl.stepID === loopStep.stepID)) {
-                newList.push(loopStep);
-              }
-
-              break;
-            }
+    // For every step in the game,
+    for (var loopStep of steps) {
+      for (var button of loopStep.buttons) {
+        // If it has a button that links to a step we are searching for,
+        if (searchSteps.find(ss => ss.stepID === button.stepID)) {
+          // And we haven't already found this step,
+          if (!foundReferences.find(r => r.stepID == loopStep.stepID)) {
+            // Add it to our list of found references
+            foundReferences.push(loopStep);
+            found = true;
           }
+
+          break;
         }
       }
-
-      return newList;
     }
 
-    return steps;
+    // Run this again if we found any new references
+    if (found) {
+      this.findSubReferenceSteps(steps, foundReferences).forEach(sr => {
+        if (!foundReferences.find(fr => fr.stepID === sr.stepID)) {
+          foundReferences.push(sr);
+        }
+      });
+    }
+
+    return foundReferences;
   }
 }

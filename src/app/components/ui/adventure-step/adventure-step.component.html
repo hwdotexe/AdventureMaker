@@ -1,8 +1,8 @@
 <div *ngIf="!!step" class="max-w-64 border border-gray-800 dark:border-gray-500 rounded-md p-2 min-w-80 min-h-64">
   <div class="flex">
-    <h2 class="flex-initial font-bold text-lg">Step {{ index }}</h2>
-    <div class="flex-auto"></div>
     <ng-container *ngIf="!scopeStep; else scoping">
+      <h2 class="flex-initial font-bold text-lg">Step {{ index }}</h2>
+      <div class="flex-auto"></div>
       <button
         *ngIf="!scopeStep"
         class="flex-initial self-center font-bold text-sm text-white bg-amber-500 hover:bg-amber-700 hover:cursor-pointer px-2 py-1 rounded-md"
@@ -11,6 +11,8 @@
       </button>
     </ng-container>
     <ng-template #scoping>
+      <h2 class="flex-initial font-bold text-lg">Scoped Step</h2>
+      <div class="flex-auto"></div>
       <button
         *ngIf="scopeStep === step.stepID"
         class="flex-initial self-center font-bold text-sm text-white bg-green-500 hover:bg-green-700 hover:cursor-pointer px-2 py-1 rounded-md"
