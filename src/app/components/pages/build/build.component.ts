@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AdventureModel } from '../../../models/adventure-model.interface';
+import { ScopeFilterPipe } from '../../../pipes/scope-filter/scope-filter.pipe';
 import { AdventureItemComponent } from '../../ui/adventure-item/adventure-item.component';
 import { AdventureStepComponent } from '../../ui/adventure-step/adventure-step.component';
 
 @Component({
   selector: 'app-build',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdventureStepComponent, AdventureItemComponent, RouterLink],
+  imports: [CommonModule, FormsModule, AdventureStepComponent, AdventureItemComponent, ScopeFilterPipe],
   templateUrl: './build.component.html',
   styleUrl: './build.component.css'
 })
@@ -17,8 +18,9 @@ export class BuildComponent implements OnInit {
   json = '';
   validateMessages: string[] = [];
   gameModel: AdventureModel;
+  scopeStep: string = '';
 
-  constructor() {
+  constructor(private router: Router) {
     this.gameModel = {
       steps: [],
       items: []
@@ -46,6 +48,19 @@ export class BuildComponent implements OnInit {
   export() {
     this.json = JSON.stringify(this.gameModel);
     localStorage.setItem('advmaker', this.json);
+  }
+
+  play() {
+    this.export();
+    this.router.navigate(['/play']);
+  }
+
+  scope(stepID: string) {
+    if (this.scopeStep === '') {
+      this.scopeStep = stepID;
+    } else {
+      this.scopeStep = '';
+    }
   }
 
   reset() {

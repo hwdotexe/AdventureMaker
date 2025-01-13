@@ -1,12 +1,30 @@
-<div *ngIf="!!step" class="max-w-64 border border-gray-800 rounded-md p-2 min-w-80 min-h-64">
+<div *ngIf="!!step" class="max-w-64 border border-gray-800 dark:border-gray-500 rounded-md p-2 min-w-80 min-h-64">
   <div class="flex">
     <h2 class="flex-initial font-bold text-lg">Step {{ index }}</h2>
     <div class="flex-auto"></div>
-    <h2 class="flex-initial font-bold text-lg text-red-600 hover:bg-red-950 hover:cursor-pointer px-2 py-1 rounded-md" (click)="delete()">X</h2>
+    <ng-container *ngIf="!scopeStep; else scoping">
+      <button
+        *ngIf="!scopeStep"
+        class="flex-initial self-center font-bold text-sm text-white bg-amber-500 hover:bg-amber-700 hover:cursor-pointer px-2 py-1 rounded-md"
+        (click)="scopeToThis()">
+        Scope
+      </button>
+    </ng-container>
+    <ng-template #scoping>
+      <button
+        *ngIf="scopeStep === step.stepID"
+        class="flex-initial self-center font-bold text-sm text-white bg-green-500 hover:bg-green-700 hover:cursor-pointer px-2 py-1 rounded-md"
+        (click)="scopeToThis()">
+        Scoping
+      </button>
+    </ng-template>
+    <h2 class="flex-initial self-center font-bold text-lg text-red-600 hover:bg-red-950 hover:cursor-pointer px-2 py-1 rounded-md" (click)="delete()">
+      X
+    </h2>
   </div>
 
-  <input [(ngModel)]="step.stepID" placeholder="Step ID" class="border px-2 py-1 rounded-sm m-1" />
-  <input [(ngModel)]="step.label" placeholder="Text" class="border px-2 py-1 rounded-sm m-1" />
+  <input [(ngModel)]="step.stepID" placeholder="Step ID" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1" />
+  <input [(ngModel)]="step.label" placeholder="Text" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1" />
 
   <div>
     <p *ngIf="step.buttons.length === 0" class="text-red-800 font-bold text-sm">You must add at least 1 button.</p>

@@ -14,7 +14,9 @@ import { AdventureButtonComponent } from '../adventure-button/adventure-button.c
 export class AdventureStepComponent {
   @Input() step?: AdventureStep;
   @Input() index?: number;
+  @Input() scopeStep?: string;
   @Output() deleteStep = new EventEmitter();
+  @Output() scope = new EventEmitter();
 
   addButton() {
     this.step?.buttons.push({
@@ -26,6 +28,10 @@ export class AdventureStepComponent {
 
   delete() {
     this.deleteStep.emit();
+  }
+
+  scopeToThis() {
+    this.scope.emit();
   }
 
   deleteButton(button: number) {

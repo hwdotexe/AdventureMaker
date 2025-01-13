@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdventureButton } from '../../../models/adventure-button.interface';
 import { AdventureItem } from '../../../models/adventure-item.interface';
@@ -13,7 +13,7 @@ import { AdventureStep } from '../../../models/adventure-step.interface';
   templateUrl: './play.component.html',
   styleUrl: './play.component.css'
 })
-export class PlayComponent {
+export class PlayComponent implements OnInit {
   json = '';
   gameModel: AdventureModel;
   steps: AdventureStep[];
@@ -33,6 +33,15 @@ export class PlayComponent {
     this.unlockedSteps = [];
     this.items = [];
     this.unlockedItems = [];
+  }
+
+  ngOnInit(): void {
+    var local = localStorage.getItem('advmaker');
+
+    if (local) {
+      this.json = local;
+      this.gameModel = JSON.parse(local) as AdventureModel;
+    }
   }
 
   parse() {

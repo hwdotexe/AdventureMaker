@@ -1,6 +1,6 @@
 <textarea
   [(ngModel)]="json"
-  class="min-w-[30rem] min-h-[12rem] border border-gray-700 rounded-sm"
+  class="min-w-[30rem] min-h-[12rem] border border-gray-700 dark:bg-gray-700 rounded-sm"
   placeholder="Paste JSON here and click Load"></textarea>
 <br />
 <button *ngIf="!!json" (click)="parse()" class="bg-sky-700 hover:bg-sky-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Load</button>

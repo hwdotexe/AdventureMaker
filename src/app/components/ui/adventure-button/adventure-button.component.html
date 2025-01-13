@@ -1,13 +1,13 @@
-<div *ngIf="button" class="border p-2 bg-gray-100 rounded-md">
+<div *ngIf="button" class="border p-2 bg-gray-100 dark:bg-zinc-800 rounded-md">
   <div class="flex">
     <h2 class="flex-initial font-bold text-lg">Button</h2>
     <div class="flex-auto"></div>
     <h2 class="flex-initial font-bold text-lg text-red-600 hover:bg-red-950 hover:cursor-pointer px-2 py-1 rounded-md" (click)="delete()">X</h2>
   </div>
 
-  <input [(ngModel)]="button.stepID" placeholder="Step ID" class="border px-2 py-1 rounded-sm m-1" />
-  <input [(ngModel)]="button.label" placeholder="Text" class="border px-2 py-1 rounded-sm m-1" />
-  <input [(ngModel)]="button.route" placeholder="Nav Route" class="border px-2 py-1 rounded-sm m-1" />
+  <input [(ngModel)]="button.stepID" placeholder="Step ID" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1" />
+  <input [(ngModel)]="button.label" placeholder="Text" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1" />
+  <input [(ngModel)]="button.route" placeholder="Nav Route" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1" />
 
   <button
     *ngIf="!button.inventory"
@@ -16,11 +16,11 @@
     Hook Inventory
   </button>
 
-  <div *ngIf="button.inventory" class="border rounded-md bg-gray-200 p-1">
+  <div *ngIf="button.inventory" class="border rounded-md bg-gray-200 dark:bg-zinc-700 p-1">
     <h3 class="font-bold text-lg">Inventory Control</h3>
-    <div class="bg-gray-300 rounded-md my-1">
+    <div class="bg-gray-300 dark:bg-zinc-800 rounded-md my-1">
       <p class="text-center text-sm font-bold m-1">Add Item to Inventory</p>
-      <input [(ngModel)]="addItem" placeholder="Item ID" class="border px-2 py-1 rounded-sm m-1 max-w-52" />
+      <input [(ngModel)]="addItem" placeholder="Item ID" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1 max-w-52" />
       <button (click)="addInventoryInsert()" class="bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">+</button>
       <ul class="list-disc ml-5">
         <li *ngFor="let addItem of button.inventory.add; index as i" class="hover:bg-red-500 hover:cursor-pointer" (click)="removeAdd(i)">
@@ -29,9 +29,9 @@
       </ul>
     </div>
 
-    <div class="bg-gray-300 rounded-md my-1">
+    <div class="bg-gray-300 dark:bg-zinc-800 rounded-md my-1">
       <p class="text-center text-sm font-bold m-1">Remove Item from Inventory</p>
-      <input [(ngModel)]="delItem" placeholder="Item ID" class="border px-2 py-1 rounded-sm m-1 max-w-52" />
+      <input [(ngModel)]="delItem" placeholder="Item ID" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1 max-w-52" />
       <button (click)="addInventoryDelete()" class="bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">+</button>
       <ul class="list-disc ml-5">
         <li *ngFor="let del of button.inventory.remove; index as i" class="hover:bg-red-500 hover:cursor-pointer" (click)="removeDelete(i)">
@@ -40,10 +40,10 @@
       </ul>
     </div>
 
-    <div class="bg-gray-300 rounded-md my-1">
+    <div class="bg-gray-300 dark:bg-zinc-800 rounded-md my-1">
       <p class="text-center text-sm font-bold m-1">Require an Item to be in the Inventory</p>
-      <input [(ngModel)]="requires.itemID" placeholder="Item ID" class="border px-2 py-1 rounded-sm m-1 max-w-52" />
-      <input [(ngModel)]="requires.error" placeholder="Error if missing" class="border px-2 py-1 rounded-sm m-1 max-w-52" />
+      <input [(ngModel)]="requires.itemID" placeholder="Item ID" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1 max-w-52" />
+      <input [(ngModel)]="requires.error" placeholder="Error if missing" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1 max-w-52" />
       <button (click)="addInventoryRequires()" class="bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">+</button>
       <ul class="list-disc ml-5">
         <li *ngFor="let reqItem of button.inventory.requires; index as i" class="hover:bg-red-500 hover:cursor-pointer" (click)="removeRequires(i)">
