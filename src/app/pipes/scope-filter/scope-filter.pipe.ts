@@ -6,7 +6,7 @@ import { AdventureStep } from '../../models/adventure-step.interface';
   standalone: true
 })
 export class ScopeFilterPipe implements PipeTransform {
-  transform(steps: AdventureStep[] | undefined, stepID: string): AdventureStep[] | undefined {
+  transform(steps: AdventureStep[] | undefined, stepID: string, directScope: boolean): AdventureStep[] | undefined {
     if (!stepID || stepID.length === 0) {
       return steps;
     }
@@ -17,12 +17,12 @@ export class ScopeFilterPipe implements PipeTransform {
       return steps;
     }
 
-    var refs = this.findSubReferenceSteps(steps, [step]);
+    var refs = this.findSubReferenceSteps(steps, [step], directScope);
 
     return refs;
   }
 
-  private findSubReferenceSteps(steps: AdventureStep[], searchSteps: AdventureStep[]): AdventureStep[] {
+  private findSubReferenceSteps(steps: AdventureStep[], searchSteps: AdventureStep[], direct: boolean): AdventureStep[] {
     var foundReferences: AdventureStep[] = [];
     var found = false;
 
@@ -46,13 +46,15 @@ export class ScopeFilterPipe implements PipeTransform {
       }
     }
 
-    // Run this again if we found any new references
-    if (found) {
-      this.findSubReferenceSteps(steps, foundReferences).forEach(sr => {
-        if (!foundReferences.find(fr => fr.stepID === sr.stepID)) {
-          foundReferences.push(sr);
-        }
-      });
+    if (!direct) {
+      // Run this again if we found any new references
+      if (found) {
+        this.findSubReferenceSteps(steps, foundReferences, direct).forEach(sr => {
+          if (!foundReferences.find(fr => fr.stepID === sr.stepID)) {
+            foundReferences.push(sr);
+          }
+        });
+      }
     }
 
     return foundReferences;

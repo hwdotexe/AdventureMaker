@@ -25,15 +25,23 @@
 <div class="my-2 border border-gray-700 rounded-md p-1">
   <h2 class="text-xl font-bold">Steps</h2>
   <button (click)="addStep()" class="bg-green-700 hover:bg-green-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Add Step</button>
+  <button *ngIf="!!scopeStep" (click)="toggleDirectScope()" class="bg-teal-700 hover:bg-teal-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">
+    {{ directScope ? 'Full Scope' : 'Direct Scope' }}
+  </button>
+  <button (click)="collapseAll()" class="bg-indigo-800 hover:bg-indigo-900 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Collapse All</button>
+  <button (click)="expandAll()" class="bg-indigo-800 hover:bg-indigo-900 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Expand All</button>
   <br />
   <div>
     <app-adventure-step
-      *ngFor="let step of gameModel?.steps | scopeFilter : scopeStep; index as i"
+      *ngFor="let step of gameModel?.steps | scopeFilter : scopeStep : directScope; index as i"
       [step]="step"
       [index]="i + 1"
       class="inline-block align-top"
       [scopeStep]="scopeStep"
+      [collapsed]="collapseOverride"
       (scope)="scope(step.stepID)"
+      (moveLeft)="moveStepLeft(i)"
+      (moveRight)="moveStepRight(i)"
       (deleteStep)="deleteStep(i)"></app-adventure-step>
   </div>
 </div>

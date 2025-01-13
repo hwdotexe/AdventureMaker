@@ -1,4 +1,4 @@
-<div *ngIf="!!step" class="max-w-64 border border-gray-800 dark:border-gray-500 rounded-md p-2 min-w-80 min-h-64">
+<div *ngIf="!!step" class="max-w-64 border border-gray-800 dark:border-gray-500 rounded-md p-2 min-w-80">
   <div class="flex">
     <ng-container *ngIf="!scopeStep; else scoping">
       <h2 class="flex-initial font-bold text-lg">Step {{ index }}</h2>
@@ -20,17 +20,30 @@
         Scoping
       </button>
     </ng-template>
+    <h2
+      class="flex-initial self-center font-bold text-lg text-green-800 hover:bg-green-400 hover:cursor-pointer px-2 py-1 rounded-md"
+      (click)="toggleCollapsed()">
+      __
+    </h2>
     <h2 class="flex-initial self-center font-bold text-lg text-red-600 hover:bg-red-950 hover:cursor-pointer px-2 py-1 rounded-md" (click)="delete()">
       X
     </h2>
   </div>
 
-  <input [(ngModel)]="step.stepID" placeholder="Step ID" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1" />
-  <input [(ngModel)]="step.label" placeholder="Text" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1" />
+  <div *ngIf="!collapsed">
+    <input [(ngModel)]="step.stepID" placeholder="Step ID" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1" />
+    <input [(ngModel)]="step.label" placeholder="Text" class="border dark:text-gray-900 px-2 py-1 rounded-sm m-1" />
 
-  <div>
-    <p *ngIf="step.buttons.length === 0" class="text-red-800 font-bold text-sm">You must add at least 1 button.</p>
-    <button (click)="addButton()" class="bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Add Button</button>
-    <app-adventure-button *ngFor="let button of step.buttons; index as i" [button]="button" (deleteButton)="deleteButton(i)"></app-adventure-button>
+    <div>
+      <p *ngIf="step.buttons.length === 0" class="text-red-800 font-bold text-sm">You must add at least 1 button.</p>
+      <button (click)="addButton()" class="bg-blue-600 hover:bg-blue-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">Add Button</button>
+      <app-adventure-button *ngFor="let button of step.buttons; index as i" [button]="button" (deleteButton)="deleteButton(i)"></app-adventure-button>
+    </div>
+
+    <div class="flex">
+      <button (click)="shiftLeft()" class="bg-orange-700 hover:bg-orange-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">&lt;--</button>
+      <div class="flex-auto"></div>
+      <button (click)="shiftRight()" class="bg-orange-700 hover:bg-orange-800 text-white font-bold rounded-md px-2 py-1 mx-1 my-1">--&gt;</button>
+    </div>
   </div>
 </div>

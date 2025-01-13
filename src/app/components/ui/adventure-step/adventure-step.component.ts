@@ -15,8 +15,11 @@ export class AdventureStepComponent {
   @Input() step?: AdventureStep;
   @Input() index?: number;
   @Input() scopeStep?: string;
+  @Input() collapsed = false;
   @Output() deleteStep = new EventEmitter();
   @Output() scope = new EventEmitter();
+  @Output() moveLeft = new EventEmitter();
+  @Output() moveRight = new EventEmitter();
 
   addButton() {
     this.step?.buttons.push({
@@ -30,11 +33,23 @@ export class AdventureStepComponent {
     this.deleteStep.emit();
   }
 
+  toggleCollapsed() {
+    this.collapsed = !this.collapsed;
+  }
+
   scopeToThis() {
     this.scope.emit();
   }
 
   deleteButton(button: number) {
     this.step?.buttons.splice(button, 1);
+  }
+
+  shiftRight() {
+    this.moveRight.emit();
+  }
+
+  shiftLeft() {
+    this.moveLeft.emit();
   }
 }

@@ -19,6 +19,8 @@ export class BuildComponent implements OnInit {
   validateMessages: string[] = [];
   gameModel: AdventureModel;
   scopeStep: string = '';
+  directScope = true;
+  collapseOverride = false;
 
   constructor(private router: Router) {
     this.gameModel = {
@@ -60,6 +62,34 @@ export class BuildComponent implements OnInit {
       this.scopeStep = stepID;
     } else {
       this.scopeStep = '';
+    }
+  }
+
+  toggleDirectScope() {
+    this.directScope = !this.directScope;
+  }
+
+  collapseAll() {
+    this.collapseOverride = true;
+  }
+
+  expandAll() {
+    this.collapseOverride = false;
+  }
+
+  moveStepLeft(stepIndex: number) {
+    if (stepIndex > 0) {
+      var newIndex = stepIndex - 1;
+
+      this.shiftStepPosition(stepIndex, newIndex);
+    }
+  }
+
+  moveStepRight(stepIndex: number) {
+    if (stepIndex < this.gameModel.steps.length - 1) {
+      var newIndex = stepIndex + 1;
+
+      this.shiftStepPosition(stepIndex, newIndex);
     }
   }
 
@@ -225,5 +255,11 @@ export class BuildComponent implements OnInit {
 
   deleteItem(itemIndex: number) {
     this.gameModel.items.splice(itemIndex, 1);
+  }
+
+  private shiftStepPosition(from: number, to: number) {
+    const elm = this.gameModel.steps.splice(from, 1)[0];
+
+    this.gameModel.steps.splice(to, 0, elm);
   }
 }
